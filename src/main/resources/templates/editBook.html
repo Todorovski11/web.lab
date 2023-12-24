@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Details</title>
+</head>
+<body>
+<header>
+    <h1>Add a book</h1>
+</header>
+<section>
+    <form id="addBookForm" method="post" th:action="@{/books/edit/{id}(id = ${book.getId()})}">
+        <label for="title">Title: </label>
+        <input type="text" id="title" name="title" th:value="${book.getTitle()}"><br/>
+        <label for="isbn">Isbn: </label>
+        <input type="text" id="isbn" name="isbn" th:value="${book.getIsbn()}"><br/>
+        <label for="genre">Genre: </label>
+        <input type="text" id="genre" name="genre" th:value="${book.getGenre()}"><br/>
+        <label for="year">Year: </label>
+        <input type="number" min="1800" max="2023" id="year" name="year" th:value="${book.getYear()}"><br/>
+        <label for="storeId">Store Id: </label>
+        <select id="storeId" name="storeId">
+            <option selected th:value="${book.getBookStore().getId()}" th:text="${book.getBookStore().getId()}"></option>
+            <option th:each="store : ${bookStores}" th:if="${store.getId()} != ${book.getBookStore().getId()}" th:value="${store.getId()}" th:text="${store.getId()}"></option>
+        </select>
+        <input id="addBookBtn" class="btnLink" type="submit" value="Add Book">
+    </form>
+    <th:block th:if="${hasError}">
+        <span class="errorMsg" th:text="${error}"></span>
+    </th:block>
+</section>
+
+</body>
+</html>

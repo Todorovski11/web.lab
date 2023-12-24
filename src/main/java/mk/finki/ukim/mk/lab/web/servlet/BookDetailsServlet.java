@@ -1,4 +1,4 @@
-package mk.finki.ukim.mk.lab.web;
+package mk.finki.ukim.mk.lab.web.servlet;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -29,17 +29,17 @@ public class BookDetailsServlet extends HttpServlet {
         super.doGet(req, resp);
     }
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        IWebExchange webExchange = JakartaServletWebApplication
-                .buildApplication(getServletContext())
-                .buildExchange(req, resp);
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        IWebExchange webExchange = JakartaServletWebApplication.
+                buildApplication(getServletContext()).
+                buildExchange(req, resp);
         WebContext context = new WebContext(webExchange);
-        //String bookIsbn = req.getParameter("isbn");
-        Book book = bookService.findBookByIsbn(req.getParameter("isbn"));
+        String bookIsbn = req.getParameter("isbn");
+        Book book = bookService.findBookByIsbn(bookIsbn);
         Author author = authorService.findById(Long.parseLong(req.getParameter("authorId")));
         bookService.addAuthorToBook(author.getId(), book.getIsbn());
-        // dodadi baranje
+        authorService.addBookToAuthor(book.getIsbn(), String.valueOf(author.getId()));
         context.setVariable("book", book);
-        springTemplateEngine.process("bookDetails", context, resp.getWriter());
+        springTemplateEngine.process("bookDetails.html", context, resp.getWriter());
     }
 }

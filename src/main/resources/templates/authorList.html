@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="utf-8">
   <title>Add new Author to Book</title>
@@ -33,16 +32,16 @@
 </header>
 <section>
   <h2>Select author:</h2>
-  <!-- Make changes to this code to dynamically display radio buttons for each author as in the example -->
+    <!-- Make changes to this code to dynamically display radio buttons for each author as in the example -->
   <form th:method="POST" th:action="@{/bookDetails}">
-    <p th:each="author: ${authors}">
+    <p th:each="author : ${authors}">
       <input checked type="radio" name="authorId" th:value="${author.getId()}" id="authorId">
       <label for="authorId">
-        <span th:text="${author.getName()}+ ' ' + ${author.getSurname()}" ></span>
+        <span th:text="${author.getName()} + ' ' + ${author.getSurname()}"></span>
       </label>
     </p>
     <input type="hidden" name="isbn" th:value="${book.getIsbn()}">
-    <input type="submit" value="submit">
+    <input type='submit' value='Add author'>
   </form>
 </section>
 <aside>
@@ -50,9 +49,11 @@
     <tr>
       <!-- change to show selected book isbn -->
       <td><b>Book Isbn</b></td>
-      <td th:text="${book.getIsbn()}"></td>
+      <td th:text="${book.getIsbn()}">
+      </td>
     </tr>
   </table>
 </aside>
+
 </body>
 </html>

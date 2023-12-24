@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 public class Author {
@@ -11,4 +13,5 @@ public class Author {
     private String name;
     private String surname;
     private String biography;
+    private List<Book> books;
 }
